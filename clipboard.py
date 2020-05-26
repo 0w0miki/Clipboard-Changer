@@ -6,10 +6,7 @@ def changeString(s):
     res = pattern.search(s)
 
     if res:
-        if res.group(2)[0] == "*":
-            changed_str = res.group(2)[1:] + ":" + res.group(1) + "*"
-        else:
-            changed_str = res.group(2) + ":" + res.group(1)
+        changed_str = res.group(2) + ":" + res.group(1).replace(" ","")
         pyperclip.copy(changed_str)
         print("this is a function",changed_str)
         return changed_str
@@ -31,8 +28,8 @@ def main():
 
 if __name__ == "__main__":
     reg_type = r"\w*\**"
-    reg_fun = r"\**\w+"
+    reg_fun = r"\w+"
     reg_param = r"\**\w+"
-    reg = r"\s*(" + reg_type + ") (" + reg_fun + "\((" + reg_type + "( \**" + reg_param + ")*,* *)+\));*"
+    reg = r"\s*(" + reg_type + " +\**)(" + reg_fun + "\((" + reg_type + "( \**" + reg_param + ")*,* *)+\));*"
     pattern = re.compile(reg)
     main()
